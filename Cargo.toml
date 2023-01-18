@@ -1,0 +1,44 @@
+[package]
+name = "and"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate_type = ["lib", "cdylib"]
+
+[dependencies]
+log = "0.4"
+winit = "0.27"
+wgpu = "0.14"
+pollster = "0.2"
+
+[target.'cfg(target_os = "android")'.dependencies]
+android_logger = "0.11"
+ndk-glue = "0.7.0"
+
+[target.'cfg(not(target_os = "android"))'.dependencies]
+env_logger = "0.10"
+image = { version = "0.24", default-features = false, features = ["png"] }
+
+[package.metadata.android]
+package = "com.github.GlennFolker"
+build_targets = [
+# Uncomment these targets to support them, preferably for release builds.
+#    "armv7-linux-androideabi",
+    "aarch64-linux-android",
+#    "i686-linux-android",
+#    "x86_64-linux-android",
+]
+resources = "res"
+
+[package.metadata.android.sdk]
+min_sdk_version = 14
+target_sdk_version = 33
+
+[[package.metadata.android.uses_feature]]
+glEsVersion = "0x00020000"
+required = true
+
+[package.metadata.android.application]
+icon = "@mipmap/icon"
+label = "And"
